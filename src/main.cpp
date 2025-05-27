@@ -15,6 +15,9 @@
 #include <fstream>
 #include "EnemyCharacter.h"
 #include "Prop.h"
+#include "Heap.h"
+#include "HeapNode.h"
+
 extern "C" {
 	#include "md5.h"
 }
@@ -147,6 +150,26 @@ int main()
 	gameObjects.push_back(mesa1);
 	Prop* mesa2 = new Prop("mesa", 320, 100, 50, player);
 	gameObjects.push_back(mesa2);
+
+	//Heap
+	Heap<HeapNode<std::string>> warningHeap;
+
+	std::string warning1 = "recibiste daño!";
+	HeapNode<std::string>* recibedDamage = new HeapNode<std::string>(&warning1, 10);
+	warningHeap.insert(recibedDamage);
+
+	std::string warning2 = "agarraste una moneda!";
+	HeapNode<std::string>* collectCoin = new HeapNode<std::string>(&warning2, 2);
+	warningHeap.insert(collectCoin);
+
+	std::string warning3 = "golpeaste un enemigo!";
+	HeapNode<std::string>* strikeEnemy = new HeapNode<std::string>(&warning3, 8);
+	warningHeap.insert(strikeEnemy);
+
+	std::string warning4 = "te estrellaste!";
+	HeapNode<std::string>* crashIntoWall = new HeapNode<std::string>(&warning4, 12);
+	warningHeap.insert(crashIntoWall);
+
 
 	while (!mapSelected && !WindowShouldClose()) {
 		BeginDrawing();

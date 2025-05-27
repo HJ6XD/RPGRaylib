@@ -15,13 +15,13 @@ void EnemyCharacter::Update()
 
 void EnemyCharacter::Draw()
 {
-	DrawTexture(texture, position.x - player->cameraOffset.x , position.y - player->cameraOffset.y, WHITE);
-	DrawText(name.c_str(), position.x - player->cameraOffset.x, position.y - player->cameraOffset.y - 20, 16, RED);
+	DrawTexture(texture, position.x , position.y,  WHITE);
+	DrawText(name.c_str(), position.x, position.y - 20, 16, RED);
 }
 
 Vector2 EnemyCharacter::SetDirection(Vector2 _target)
 {
-	Vector2 dir = { _target.x - position.x, _target.y - position.y};
+	Vector2 dir = { _target.x - position.x - player->cameraOffset.x , _target.y - position.y - player->cameraOffset.y };
 	float _dx = pow(dir.x, 2);
 	float _dy = pow(dir.y, 2);
 	float _dmag = sqrt(_dx + _dy);
