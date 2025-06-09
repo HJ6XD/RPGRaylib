@@ -2,17 +2,18 @@
 #include "HeapNode.h"
 #include <vector>
 #include <iostream>
+//#include <>
 template<class T>
 class Heap
 {
-	std::vector<HeapNode<&T>*> heap;
+	std::vector<HeapNode<T>> heap;
 
 	int parent(int i) { return (i - 1) / 2; }
 	int left(int i) { return 2 * i + 1; }
 	int right(int i) { return 2 * i + 2; }
 
     void heapify_up(int i) {
-        while (i > 0 && heap[i] > heap[parent(i)]) {
+        while (i > 0 && heap[i].GetValue() > heap[parent(i)].GetValue()) {
             swap(heap[i], heap[parent(i)]);
             i = parent(i);
         }
@@ -23,8 +24,8 @@ class Heap
         int l = left(i);
         int r = right(i);
 
-        if (l < heap.size() && heap[l] > heap[largest]) largest = l;
-        if (r < heap.size() && heap[r] > heap[largest]) largest = r;
+        if (l < heap.size() && heap[l].GetValue() > heap[largest].GetValue()) largest = l; 
+        if (r < heap.size() && heap[r].GetValue() > heap[largest].GetValue()) largest = r;
 
         if (largest != i) {
             swap(heap[i], heap[largest]);
@@ -33,17 +34,29 @@ class Heap
     }
 
 public: 
-    void insert(HeapNode<&T>* element) {
-        heap.push_back(element);
+    Heap() {
+        //heap = new std::vector<HeapNode<T> >();
+    }
+
+    void insert(T element, int val) {
+        HeapNode<T>* hn = new HeapNode<T>(&element, val);
+        heap.push_back(*hn);
         heapify_up(heap.size() - 1);
     }
 
-    int extract() {
+    T* extract() {
+        std::cout << "extrayendo" << std::endl;
+
         if (heap.empty()) {
-            std::count << "heap esta vacía" << std::endl;
+            std::cout << "heap esta vacía" << std::endl;
             return nullptr;
         }
-        int top = heap[0]->GetValue();
+        T* top = heap[0].GetData();
+
+        std::string s = static_cast<std::string>(*top);
+        if (!s) {
+            std::cout << "extrayendo s: " << s << std::endl;
+        }
         heap[0] = heap.back();
         heap.pop_back();
         heapify_down(0);

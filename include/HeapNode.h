@@ -8,6 +8,7 @@ private:
 public:
 	HeapNode(T* _data, int val) : data(_data), value(val) {}
 
-	void GetValue() {return this.value}
+	T* GetData() { return data; }
+	int GetValue() { return value; }
 };
 

@@ -23,6 +23,7 @@ extern "C" {
 }
 
 typedef std::vector<std::vector<int>> Map2D;
+typedef HeapNode<std::string> StringNode;
 
 void LoadMap(Map2D& _map, size_t _x, size_t _y, std::string filename)
 {
@@ -152,24 +153,23 @@ int main()
 	gameObjects.push_back(mesa2);
 
 	//Heap
-	Heap<HeapNode<std::string>> warningHeap;
+	Heap<std::string>* warningHeap = new Heap<std::string>();
 
 	std::string warning1 = "recibiste daño!";
-	HeapNode<std::string>* recibedDamage = new HeapNode<std::string>(&warning1, 10);
-	warningHeap.insert(recibedDamage);
+	warningHeap->insert(warning1, 10);
 
 	std::string warning2 = "agarraste una moneda!";
-	HeapNode<std::string>* collectCoin = new HeapNode<std::string>(&warning2, 2);
-	warningHeap.insert(collectCoin);
+	warningHeap->insert(warning2, 2);
 
 	std::string warning3 = "golpeaste un enemigo!";
-	HeapNode<std::string>* strikeEnemy = new HeapNode<std::string>(&warning3, 8);
-	warningHeap.insert(strikeEnemy);
+	warningHeap->insert(warning3, 5);
 
 	std::string warning4 = "te estrellaste!";
-	HeapNode<std::string>* crashIntoWall = new HeapNode<std::string>(&warning4, 12);
-	warningHeap.insert(crashIntoWall);
+	warningHeap->insert(warning4, 12);
 
+	PanelMensaje* warnings = new PanelMensaje(20, 120, 50, 2);
+
+	
 
 	while (!mapSelected && !WindowShouldClose()) {
 		BeginDrawing();
@@ -222,6 +222,8 @@ int main()
 	while (mapSelected && !WindowShouldClose())
 	{
 		panel->update();
+		warnings->update();
+
 		//updtae de enemigos
 		for (int i = 0; i < gameObjects.size(); i++) {
 			if (gameObjects[i]->getEnable() == true)
@@ -235,27 +237,26 @@ int main()
 		if (IsKeyPressed(KeyboardKey::KEY_G)) {
 			panel->show("mondongo");
 		}
-		std::cout << panel->position.x << ", " << panel->position.y << std::endl;
-		std::cout << panel->dessiredPositionY << std::endl;
+		if (IsKeyPressed(KeyboardKey::KEY_T)) {
+			std::string* s = warningHeap->extract();
+			std::cout << *s << std::endl;
+			warnings->show( *s);
+		}
 
 		// drawing
 		BeginDrawing();
 
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(SKYBLUE);
-		
-		//update del jugador
-
 
 		for (int i = 0; i < maxTilesV; i++) { 
 			for (int j = 0; j < maxTilesH; j++) {
 				DrawTexture(tiles[mapa[i][j]], j * tileSize - player->cameraOffset.x, i * tileSize - player->cameraOffset.y, WHITE);
 			}
-		}
-
-		
+		}		
 
 		panel->draw();
+		warnings->draw();
 		for (int i = 0; i < gameObjects.size(); i++) {
 			if (gameObjects[i]->getEnable() == true)
 				gameObjects[i]->Draw();
