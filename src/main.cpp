@@ -88,7 +88,7 @@ int main()
 
 	// Utility function from resource_dir.h to find the resources folder and set it as the current working directory so we can load from it
 	SearchAndSetResourceDir("resources");
-	
+
 	//Seleccion de mapa
 	std::vector<std::string> mapName;
 	mapName.push_back("map1.txt");
@@ -123,23 +123,23 @@ int main()
 
 	player->printUID();
 	gameObjects.push_back(player);
-	
+
 	std::cout << player->inventory->GetCurrentItemName();
 
 	//crear enemigos
-	EnemyCharacter* ted = new EnemyCharacter("Ted", player, 10,10);
+	EnemyCharacter* ted = new EnemyCharacter("Ted", player, 10, 10);
 	gameObjects.push_back(ted);
 	ted->Start();
-	EnemyCharacter* fred = new EnemyCharacter("Fred", player,  100, 10);
+	EnemyCharacter* fred = new EnemyCharacter("Fred", player, 100, 10);
 	gameObjects.push_back(fred);
 	fred->Start();
-	EnemyCharacter* ned = new EnemyCharacter("Ned", player,  10, 100);
+	EnemyCharacter* ned = new EnemyCharacter("Ned", player, 10, 100);
 	gameObjects.push_back(ned);
 	ned->Start();
 
 
 	//panel de mensaje
-	PanelMensaje* panel = new PanelMensaje( GetScreenWidth() - 210, 200, 50, 2);
+	PanelMensaje* panel = new PanelMensaje(GetScreenWidth() - 210, 200, 50, 2);
 	//para la prueba simularemos que obtiene muvhos logors
 	panel->show("thief");
 	panel->show("gosip");
@@ -154,20 +154,38 @@ int main()
 
 	//Heap
 	Heap<std::string>* warningHeap = new Heap<std::string>();
+	Heap<const char*>* warningH2 = new Heap<const char*>();
 
-	std::string warning1 = "recibiste daño!";
+	Heap<int>* heapInt = new Heap<int>();
+	heapInt->insert(65427, 2);
+	heapInt->insert(7682, 8);
+	heapInt->insert(12345, 10);
+
+
+
+	std::string warning1 = "recibiste dano!";
+	const char* cwar1 = "recibiste dano!";
 	warningHeap->insert(warning1, 10);
+	warningH2->insert(cwar1, 10);
 
 	std::string warning2 = "agarraste una moneda!";
+	const char* cwar2 = "agarraste una moneda";
+	warningH2->insert(cwar2, 2);
 	warningHeap->insert(warning2, 2);
+	warningH2->insert("warning3", 3);
+	warningH2->insert("warning4", 4);
+	warningH2->insert("warning5", 5);
+
+	//std::cout << warningH2->extract() << std::endl;
 
 	std::string warning3 = "golpeaste un enemigo!";
 	warningHeap->insert(warning3, 5);
 
 	std::string warning4 = "te estrellaste!";
+	
 	warningHeap->insert(warning4, 12);
 
-	PanelMensaje* warnings = new PanelMensaje(20, 120, 50, 2);
+	PanelMensaje* warnings = new PanelMensaje(GetScreenWidth() /2 - 60, 120, 50, 2);
 
 	
 
@@ -238,9 +256,9 @@ int main()
 			panel->show("mondongo");
 		}
 		if (IsKeyPressed(KeyboardKey::KEY_T)) {
-			std::string* s = warningHeap->extract();
-			std::cout << *s << std::endl;
-			warnings->show( *s);
+			std::string s = std::string( warningHeap->extract());
+			std::cout << s << std::endl;
+			warnings->show( s);
 		}
 
 		// drawing

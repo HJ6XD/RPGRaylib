@@ -78,6 +78,8 @@ public:
 		DrawText(message.c_str(), position.x + 10, position.y + 10, 20, PURPLE);
 	}
 	void show(std::string _msg) {
+
+
 		msgStack.push(_msg);
 	}
 };

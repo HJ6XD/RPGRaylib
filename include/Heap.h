@@ -13,10 +13,10 @@ class Heap
 	int right(int i) { return 2 * i + 2; }
 
     void heapify_up(int i) {
-        while (i > 0 && heap[i].GetValue() > heap[parent(i)].GetValue()) {
-            swap(heap[i], heap[parent(i)]);
-            i = parent(i);
-        }
+       //while (i > 0 && heap[i].GetValue() > heap[parent(i)].GetValue()) {
+            //std::swap(heap[i], heap[parent(i)]);
+            //i = parent(i);
+        //}
     }
 
     void heapify_down(int i) {
@@ -28,10 +28,12 @@ class Heap
         if (r < heap.size() && heap[r].GetValue() > heap[largest].GetValue()) largest = r;
 
         if (largest != i) {
-            swap(heap[i], heap[largest]);
+            std::swap(heap[i], heap[largest]);
             heapify_down(largest);
         }
     }
+
+
 
 public: 
     Heap() {
@@ -44,23 +46,19 @@ public:
         heapify_up(heap.size() - 1);
     }
 
-    T* extract() {
+    T extract() {
         std::cout << "extrayendo" << std::endl;
 
         if (heap.empty()) {
             std::cout << "heap esta vacía" << std::endl;
-            return nullptr;
+            return T();
         }
-        T* top = heap[0].GetData();
-
-        std::string s = static_cast<std::string>(*top);
-        if (!s) {
-            std::cout << "extrayendo s: " << s << std::endl;
-        }
+        T* top = heap.at(0).GetData();
+        
         heap[0] = heap.back();
         heap.pop_back();
         heapify_down(0);
-        return top;
+        return *top;
     }
 
     int peek() const {
@@ -68,7 +66,7 @@ public:
             std::count<<"heap esta vacía" << std::endl;
             return nullptr;
         }
-        return heap[0];
+        return heap.at(0);
     }
 
     bool is_empty() const {

@@ -22,6 +22,8 @@ public:
 			iter = iter->next;
 		iter->next = new LLNode<T>(_data, iter);
 
+		head->last = iter->next;
+
 		return iter->next;
 	}
 
