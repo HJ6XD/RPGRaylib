@@ -17,6 +17,7 @@ void EnemyCharacter::Draw()
 {
 	DrawTexture(texture, position.x , position.y,  WHITE);
 	DrawText(name.c_str(), position.x, position.y - 20, 16, RED);
+	DrawText(getUID().c_str(), position.x, position.y - 20, 16, RED);
 }
 
 Vector2 EnemyCharacter::SetDirection(Vector2 _target)

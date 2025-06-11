@@ -149,7 +149,7 @@ int main()
 	//props
 	Prop* mesa1 = new Prop("mesa", 120, 300, 20, player);
 	gameObjects.push_back(mesa1);
-	Prop* mesa2 = new Prop("mesa", 320, 100, 50, player);
+	Prop* mesa2 = new Prop("caja", 320, 100, 50, player);
 	gameObjects.push_back(mesa2);
 
 	//Heap
