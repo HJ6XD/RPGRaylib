@@ -4,11 +4,11 @@ class HeapNode
 {
 private:
 	int value;
-	T* data;
+	T data;
 public:
-	HeapNode(T* _data, int val) : data(_data), value(val) {}
+	HeapNode(T _data, int val) : data(_data), value(val) {}
 
-	T* GetData() { return data; }
-	int GetValue() { return value; }
+	const T* GetData() const { return &data; }
+	int GetValue() const { return value; }
 };
 

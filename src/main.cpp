@@ -152,39 +152,24 @@ int main()
 	Prop* mesa2 = new Prop("caja", 320, 100, 50, player);
 	gameObjects.push_back(mesa2);
 
-	//Heap
-	Heap<std::string>* warningHeap = new Heap<std::string>();
-	Heap<const char*>* warningH2 = new Heap<const char*>();
-
+	std::cout << "probando el heap" << std::endl;
 	Heap<int>* heapInt = new Heap<int>();
-	heapInt->insert(65427, 2);
-	heapInt->insert(7682, 8);
-	heapInt->insert(12345, 10);
+	heapInt->insert(65427, 13);
+	//std::cout << "insertado " <<  *heapInt->peek() <<  std::endl;
+	heapInt->print();
+	heapInt->insert(7682, 28);
+	heapInt->print();
+	//std::cout << "insertado " << *heapInt->peek() << std::endl;
+	heapInt->insert(12345, 666);
+	heapInt->print();
+	//std::cout << "insertado " << *heapInt->peek() << std::endl;
 
-
-
-	std::string warning1 = "recibiste dano!";
-	const char* cwar1 = "recibiste dano!";
-	warningHeap->insert(warning1, 10);
-	warningH2->insert(cwar1, 10);
-
-	std::string warning2 = "agarraste una moneda!";
-	const char* cwar2 = "agarraste una moneda";
-	warningH2->insert(cwar2, 2);
-	warningHeap->insert(warning2, 2);
-	warningH2->insert("warning3", 3);
-	warningH2->insert("warning4", 4);
-	warningH2->insert("warning5", 5);
-
-	//std::cout << warningH2->extract() << std::endl;
-
-	std::string warning3 = "golpeaste un enemigo!";
-	warningHeap->insert(warning3, 5);
-
-	std::string warning4 = "te estrellaste!";
-	
-	warningHeap->insert(warning4, 12);
-
+	//heap que contiene los mensajes de warning
+	Heap<std::string>* warningHeap = new Heap<std::string>();
+	warningHeap->insert("recibiste dano!", 10);
+	warningHeap->insert("agarraste una moneda!", 2);
+	warningHeap->insert("golpeaste un enemigo!", 5);
+	warningHeap->insert("te estrellaste!", 12);
 	PanelMensaje* warnings = new PanelMensaje(GetScreenWidth() /2 - 60, 120, 50, 2);
 
 	
